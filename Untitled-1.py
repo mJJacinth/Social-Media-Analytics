@@ -25,13 +25,7 @@ import csv
 
 
 
-def findHashtags(message):
-    temp1=[]
-    temp= message.split(" ")
-    for i in temp:
-        if i[0] == "#":
-            temp1.append(i)
-    for i in temp1:
-        if endChars
-    # return
-findHashtags("I am so #excited to watch #TheMandalorian! #starwars") == [ "#excited", "#TheMandalorian", "#starwars" ]
+def getRegionFromState(stateDf, state):
+    
+    
+    return

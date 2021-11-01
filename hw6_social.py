@@ -27,7 +27,7 @@ Returns: dataframe
 '''
 def makeDataFrame(filename):
     str=pd.read_csv(filename)
-    print (str)
+    return str
 
 
 '''
@@ -104,10 +104,6 @@ def findHashtags(message):
         res.append(temp1)
     return res
 
-            
-    # returnu
-    # return tag
-
 
 ''' 
 getRegionFromState(stateDf, state)
@@ -116,7 +112,8 @@ Parameters: dataframe ; str
 Returns: str
 '''
 def getRegionFromState(stateDf, state):
-    return
+    row=stateDf.loc[stateDf["state"] == state, "region"]
+    return row.values[0]
 
 
 '''
@@ -307,7 +304,7 @@ if __name__ == "__main__":
     # test.week1Tests()
     # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     # # test.runWeek1()
-    test.testFindHashtags()
+    test.testGetRegionFromState()
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
