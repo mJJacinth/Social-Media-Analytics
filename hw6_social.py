@@ -17,6 +17,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 endChars = [ " ", "\n", "#", ".", ",", "?", "!", ":", ";", ")" ]
+#  str=pd.DataFrame(politicaldata.csv)
 
 '''
 makeDataFrame(filename)
@@ -25,7 +26,8 @@ Parameters: str
 Returns: dataframe
 '''
 def makeDataFrame(filename):
-    return
+    str=pd.read_csv(filename)
+    print (str)
 
 
 '''
@@ -35,7 +37,18 @@ Parameters: str
 Returns: str
 '''
 def parseName(fromString):
-    return
+    temp=fromString.split(":")[1]
+    temp=temp.split("(")[0]
+    temp=temp.split(" ")
+    if len(temp)>3:
+        name=str(temp[1])+" "+str(temp[2])
+    else:
+        name=str(temp[1])
+    return name
+    
+
+
+# print(parseName("data/politicaldata.csv"))
 
 
 '''
@@ -45,7 +58,15 @@ Parameters: str
 Returns: str
 '''
 def parsePosition(fromString):
-    return
+    temp=fromString.split("(")[1]
+    temp=temp.split(")")[0]
+    temp=temp.split(" ")
+    if len(temp)==3:
+        name=str(temp[0])
+    return name
+    
+# parsePosition("From: Steny Hoyer (Representative from Maryland)")
+
 
 
 '''
@@ -55,7 +76,14 @@ Parameters: str
 Returns: str
 '''
 def parseState(fromString):
-    return
+    temp=fromString.split("(")[1]
+    temp=temp.split(")")[0]
+    temp=temp.split(" ")
+    if len(temp)==3:
+        name=str(temp[2])
+    else:
+        name= str(temp[2])+" "+str(temp[3])
+    return name
 
 
 '''
@@ -262,10 +290,11 @@ def scatterPlot(xValues, yValues, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek1()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # # test.runWeek1()
+    test.testParsePosition()
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
