@@ -4,6 +4,7 @@ Name:
 Roll Number:
 """
 
+from nltk.tag import pos_tag
 import hw6_social_tests as test
 
 project = "Social" # don't edit this
@@ -61,6 +62,7 @@ def parsePosition(fromString):
     temp=fromString.split("(")[1]
     temp=temp.split(")")[0]
     temp=temp.split(" ")
+    name=""
     if len(temp)==3:
         name=str(temp[0])
     return name
@@ -123,6 +125,25 @@ Parameters: dataframe ; dataframe
 Returns: None
 '''
 def addColumns(data, stateDf):
+    names=[]
+    positions=[]
+    states=[]
+    regions=[]
+    hashtags=[]
+    for index, row in data.iterrows():
+        val=row["label"]
+        # val1=row["text"]
+        names.append(parseName(val))
+        positions.append(parsePosition(val))
+        state=parseState(val)
+        states.append(parseState(val))
+        regions.append(getRegionFromState(stateDf,state))
+        hashtags.append(findHashtags(data["text"][index]))        
+    data['name']=names
+    data['position']=positions
+    data['state']=states
+    data['region']=regions
+    data['hashtags']=hashtags
     return
 
 
@@ -300,11 +321,11 @@ def scatterPlot(xValues, yValues, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    # test.week1Tests()
-    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    # # test.runWeek1()
-    test.testGetRegionFromState()
+    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    test.week1Tests()
+    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek1()
+
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
