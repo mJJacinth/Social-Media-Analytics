@@ -194,7 +194,7 @@ def testGetHashtagSentiment(df):
     assert(math.isclose(getHashtagSentiment(df, "#ObamaCare"), 0))
     print("... done!")
 
-
+    
 def week2Tests():
     testFindSentiment()
     testAddSentimentColumn()
