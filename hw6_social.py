@@ -178,7 +178,6 @@ def addSentimentColumn(data):
         sentiments.append(var)
 
     data["sentiment"]=sentiments
-    print(data)
     return 
 
 
@@ -226,8 +225,15 @@ Parameters: dataframe
 Returns: dict mapping strs to ints
 '''
 def getHashtagRates(data):
-    
-    return
+    dict={}
+    for row in data["hashtags"]:
+        for i in row:
+            if i not in dict and len(i)!=0:
+                dict[i]=1
+            else:
+                dict[i]=dict[i]+1
+    return dict
+    # print(dict)
 
 
 
@@ -365,7 +371,7 @@ if __name__ == "__main__":
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
-    test.testGetDataForRegion()
+    test.testGetHashtagRates()
 
     ## Uncomment these for Week 3 ##
     """print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
