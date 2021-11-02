@@ -313,7 +313,12 @@ Parameters: dict mapping strs to ints ; dict mapping strs to ints ; int ; str
 Returns: None
 '''
 def graphTopNStates(stateCounts, stateFeatureCounts, n, title):
-   
+    rate={}
+    states={}
+    for i in stateFeatureCounts:
+        rate[i]=(stateFeatureCounts[i]/stateCounts[i])
+    states=dict(Counter(rate).most_common(n))
+    graphStateCounts(states,title)
     return
 
 
