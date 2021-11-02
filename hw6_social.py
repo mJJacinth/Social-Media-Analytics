@@ -247,7 +247,15 @@ Parameters: dict mapping strs to ints ; int
 Returns: dict mapping strs to ints
 '''
 def mostCommonHashtags(hashtags, count):
-    return
+    dict={}
+    while len(dict)!=count:
+        large=0
+        for each in hashtags:
+            if each not in dict and hashtags[each]>large:
+                large=hashtags[each]
+                key=each
+        dict[key]=large
+    return dict
 
 
 '''
@@ -371,7 +379,7 @@ if __name__ == "__main__":
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
-    test.testGetHashtagRates()
+    test.testMostCommonHashtags()
 
     ## Uncomment these for Week 3 ##
     """print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
