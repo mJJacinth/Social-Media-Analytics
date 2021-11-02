@@ -53,3 +53,41 @@ def getHashtagSentiment(data, hashtag):
                 num=num+0
     print(num/count)
 getHashtagSentiment(data, hashtag)
+
+
+def graphTopNStates(stateCounts, stateFeatureCounts, n, title):
+    rate={}
+    states={}
+    for i in stateFeatureCounts:
+        rate[i]=(stateFeatureCounts[i]/stateCounts[i])
+    states=dict(Counter(rate).most_common(n))
+    graphStateCounts(states,title)
+    return
+
+def graphRegionComparison(regionDicts, title):
+    list=[]
+    region=[]
+    value=[]
+    for i in regionDicts:
+        temp=[]
+        for j in regionDicts[i]:
+            if j not in list:
+                list.append(j)
+            temp.append(regionDicts[i][j])
+        value.append(list)
+        region.append(i)
+    sideBySideBarPlots(list,region,value,title)
+    return
+def graphHashtagSentimentByFrequency(data):
+    lst=[]
+    freq=[]
+    score=[]
+    rates=getHashtagRates(data)
+    tags=mostCommonHashtags(rates,50)
+    for i,j in tags.items():
+        lst.append(i)
+        freq.append(j)
+        sentiment=getHashtagSentiment(data,i)
+        score.append(sentiment)    
+    scatterPlot(freq,score,lst,"SentimentByFrequency")
+    return

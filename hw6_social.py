@@ -4,8 +4,10 @@ Name:
 Roll Number:
 """
 
+from typing import Counter
 from nltk.tag import pos_tag
 import hw6_social_tests as test
+from collections import Counter
 
 project = "Social" # don't edit this
 
@@ -296,11 +298,11 @@ def graphStateCounts(stateCounts, title):
     for i,j in stateCounts.items():
         key.append(i)
         val.append(j)
-        plt.xticks(ticks=list(range(len(val))),labels=key,rotation="vertical")
-        plt.title(title)
-        plt.bar(key,val,width=3)
-        plt.show()
-
+    for index in range(len (val)): 
+        plt.bar(key[index],val[index])
+    plt.xticks(ticks=list(range(len(val))),labels=key,rotation="vertical")
+    plt.title(title)
+    plt.show()
     return
 
 
@@ -311,6 +313,7 @@ Parameters: dict mapping strs to ints ; dict mapping strs to ints ; int ; str
 Returns: None
 '''
 def graphTopNStates(stateCounts, stateFeatureCounts, n, title):
+   
     return
 
 
@@ -321,6 +324,7 @@ Parameters: dict mapping strs to (dicts mapping strs to ints) ; str
 Returns: None
 '''
 def graphRegionComparison(regionDicts, title):
+    
     return
 
 
@@ -331,6 +335,7 @@ Parameters: dataframe
 Returns: None
 '''
 def graphHashtagSentimentByFrequency(data):
+   
     return
 
 
