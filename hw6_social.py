@@ -351,7 +351,17 @@ Parameters: dataframe
 Returns: None
 '''
 def graphHashtagSentimentByFrequency(data):
-   
+    lst=[]
+    freq=[]
+    score=[]
+    rates=getHashtagRates(data)
+    tags=mostCommonHashtags(rates,50)
+    for i,j in tags.items():
+        lst.append(i)
+        freq.append(j)
+        sentiment=getHashtagSentiment(data,i)
+        score.append(sentiment)    
+    scatterPlot(freq,score,lst,"SentimentByFrequency")
     return
 
 
