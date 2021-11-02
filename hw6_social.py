@@ -251,6 +251,7 @@ def mostCommonHashtags(hashtags, count):
     while len(dict)!=count:
         large=0
         for each in hashtags:
+            print(each)
             if each not in dict and hashtags[each]>large:
                 large=hashtags[each]
                 key=each
@@ -268,11 +269,11 @@ def getHashtagSentiment(data, hashtag):
     num=0
     count=0
     for index,row in data.iterrows():
-       hashtags=findHashtags(row["text"])
-       if hashtag in hashtags:
+        hashtags=findHashtags(row["text"])
+        if hashtag in hashtags:
             count=count+1
             if row["sentiment"]=="positive":
-                num=num+1
+                num=num+1        
             elif row["sentiment"]=="negative":
                 num=num-1
             elif row["sentiment"]=="neutral":
@@ -290,6 +291,16 @@ Returns: None
 '''
 def graphStateCounts(stateCounts, title):
     import matplotlib.pyplot as plt
+    key=[]
+    val=[]
+    for i,j in stateCounts.items():
+        key.append(i)
+        val.append(j)
+        plt.xticks(ticks=list(range(len(val))),labels=key,rotation="vertical")
+        plt.title(title)
+        plt.bar(key,val,width=3)
+        plt.show()
+
     return
 
 
@@ -391,8 +402,8 @@ if __name__ == "__main__":
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
-    test.testGetHashtagSentiment()
+    
 
     ## Uncomment these for Week 3 ##
-    """print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek3()"""
+    print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek3()

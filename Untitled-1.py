@@ -1,10 +1,10 @@
 import pandas as pd
 import csv
-# def makeDataFrame(filename):
-#     str=pd.read_csv(filename)
-#     # print(str)
+def makeDataFrame(filename):
+    str=pd.read_csv(filename)
+    # print(str)
 #     return str
-# print(makeDataFrame("data/politicaldata.csv"))
+makeDataFrame("data/politicaldata.csv")
 
 # def parseName(fromString):
 #     f = open('data/politicaldata.csv')
@@ -22,10 +22,34 @@ import csv
 #     print(temp)
     
 # parsePosition("From: Steny Hoyer (Representative from Maryland)")
+endChars = [ " ", "\n", "#", ".", ",", "?", "!", ":", ";", ")" ] 
 
+def findHashtags(message):
+    res=[]
+    temp= message.split("#")
+    for i in temp[1:]:
+        temp1="#"
+        for j in i:
+            if j in endChars:
+                break
+            temp1=temp1+j
+        res.append(temp1)
+    return res
 
-
-def getRegionFromState(stateDf, state):
-    
-    
-    return
+data="data/politicaldata.csv"
+hashtag="#jobs"
+def getHashtagSentiment(data, hashtag):
+    num=0
+    count=0
+    for index,row in data.iterrows():
+        hashtags=findHashtags(row["text"])
+        if hashtag in hashtags:
+            count=count+1
+            if row["sentiment"]=="positive":
+                num=num+1        
+            elif row["sentiment"]=="negative":
+                num=num-1
+            elif row["sentiment"]=="neutral":
+                num=num+0
+    print(num/count)
+getHashtagSentiment(data, hashtag)

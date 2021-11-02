@@ -11,7 +11,7 @@ df=pd.DataFrame(d)
 df["Ice-cream"]= ["butterscotch","choco delight","brownie","litchie"]
 print(df)
 for index, row in df.iterrows():
-   print(index)
-   print(row)
-   print("Name:" ,row["major"])
+   # print(index)
+   # print(row)
+   print(row["major"])
    print()
