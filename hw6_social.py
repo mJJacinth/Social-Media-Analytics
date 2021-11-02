@@ -4,6 +4,7 @@ Name:
 Roll Number:
 """
 
+from nltk.tag import pos_tag
 import hw6_social_tests as test
 
 project = "Social" # don't edit this
@@ -17,6 +18,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 endChars = [ " ", "\n", "#", ".", ",", "?", "!", ":", ";", ")" ]
+#  str=pd.DataFrame(politicaldata.csv)
 
 '''
 makeDataFrame(filename)
@@ -25,7 +27,8 @@ Parameters: str
 Returns: dataframe
 '''
 def makeDataFrame(filename):
-    return
+    str=pd.read_csv(filename)
+    return str
 
 
 '''
@@ -35,7 +38,18 @@ Parameters: str
 Returns: str
 '''
 def parseName(fromString):
-    return
+    temp=fromString.split(":")[1]
+    temp=temp.split("(")[0]
+    temp=temp.split(" ")
+    if len(temp)>3:
+        name=str(temp[1])+" "+str(temp[2])
+    else:
+        name=str(temp[1])
+    return name
+    
+
+
+# print(parseName("data/politicaldata.csv"))
 
 
 '''
@@ -45,7 +59,16 @@ Parameters: str
 Returns: str
 '''
 def parsePosition(fromString):
-    return
+    temp=fromString.split("(")[1]
+    temp=temp.split(")")[0]
+    temp=temp.split(" ")
+    name=""
+    if len(temp)==3:
+        name=str(temp[0])
+    return name
+    
+# parsePosition("From: Steny Hoyer (Representative from Maryland)")
+
 
 
 '''
@@ -55,7 +78,14 @@ Parameters: str
 Returns: str
 '''
 def parseState(fromString):
-    return
+    temp=fromString.split("(")[1]
+    temp=temp.split(")")[0]
+    temp=temp.split(" ")
+    if len(temp)==3:
+        name=str(temp[2])
+    else:
+        name= str(temp[2])+" "+str(temp[3])
+    return name
 
 
 '''
@@ -65,17 +95,27 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    return
+    res=[]
+    temp= message.split("#")
+    for i in temp[1:]:
+        temp1="#"
+        for j in i:
+            if j in endChars:
+                break
+            temp1=temp1+j
+        res.append(temp1)
+    return res
 
 
-'''
+''' 
 getRegionFromState(stateDf, state)
 #6 [Check6-1]
 Parameters: dataframe ; str
 Returns: str
 '''
 def getRegionFromState(stateDf, state):
-    return
+    row=stateDf.loc[stateDf["state"] == state, "region"]
+    return row.values[0]
 
 
 '''
@@ -85,6 +125,25 @@ Parameters: dataframe ; dataframe
 Returns: None
 '''
 def addColumns(data, stateDf):
+    names=[]
+    positions=[]
+    states=[]
+    regions=[]
+    hashtags=[]
+    for index, row in data.iterrows():
+        val=row["label"]
+        # val1=row["text"]
+        names.append(parseName(val))
+        positions.append(parsePosition(val))
+        state=parseState(val)
+        states.append(parseState(val))
+        regions.append(getRegionFromState(stateDf,state))
+        hashtags.append(findHashtags(data["text"][index]))        
+    data['name']=names
+    data['position']=positions
+    data['state']=states
+    data['region']=regions
+    data['hashtags']=hashtags
     return
 
 
@@ -98,9 +157,12 @@ Returns: str
 '''
 def findSentiment(classifier, message):
     score = classifier.polarity_scores(message)['compound']
-    return
-
-
+    if score > 0.1:
+        return  "positive"
+    if score < -0.1:
+        return "negative"
+    else:
+        return "neutral"
 '''
 addSentimentColumn(data)
 #2 [Check6-2]
@@ -267,11 +329,13 @@ if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     test.runWeek1()
 
+
     ## Uncomment these for Week 2 ##
-    """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    test.week2Tests()
-    print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek2()"""
+    # print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
+    # test.week2Tests()
+    # print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek2()
+    test.testFindSentiment()
 
     ## Uncomment these for Week 3 ##
     """print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
