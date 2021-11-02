@@ -209,7 +209,14 @@ Parameters: dataframe ; str
 Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def getDataForRegion(data, colName):
-    return
+    dict={}
+    for index,row in data.iterrows():
+        if row["region"] not in dict:
+            dict[row["region"]]={}
+        if row[colName] not in dict[row["region"]]:
+            dict[row["region"]][row[colName]]=0
+        dict[row["region"]][row[colName]]+=1 
+    return dict
 
 
 '''
@@ -219,7 +226,12 @@ Parameters: dataframe
 Returns: dict mapping strs to ints
 '''
 def getHashtagRates(data):
+    
     return
+
+
+
+        
 
 
 '''
@@ -353,7 +365,7 @@ if __name__ == "__main__":
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
-    test.testGetDataCountByState()
+    test.testGetDataForRegion()
 
     ## Uncomment these for Week 3 ##
     """print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
