@@ -338,7 +338,7 @@ def graphRegionComparison(regionDicts, title):
             if j not in list:
                 list.append(j)
             temp.append(regionDicts[i][j])
-        value.append(list)
+        value.append(temp)
         region.append(i)
     sideBySideBarPlots(list,region,value,title)
     return
